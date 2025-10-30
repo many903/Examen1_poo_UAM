@@ -10,13 +10,12 @@ public class Main {
         do {
             System.out.println("\n=== MENÚ PRINCIPAL ===");
             System.out.println("1. Menú de Productos");
-            System.out.println("2. Capturar Producto 2");
-            System.out.println("3. Mostrar inventario");
-            System.out.println("4. Aplicar descuento");
-            System.out.println("5. Vender unidades");
-            System.out.println("6. Reponer unidades");
-            System.out.println("7. Mostrar integrantes del equipo");
-            System.out.println("8. Salir");
+            System.out.println("2. Mostrar inventario");
+            System.out.println("2. Aplicar descuento");
+            System.out.println("3. Vender unidades");
+            System.out.println("4. Reponer unidades");
+            System.out.println("5. Mostrar integrantes del equipo");
+            System.out.println("6. Salir");
             System.out.print("Seleccione una opción: ");
             
             opcion = scanner.nextInt();
