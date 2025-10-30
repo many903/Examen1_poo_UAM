@@ -1,6 +1,4 @@
-Perfecto ✅ Aquí tienes un **README.md** profesional y claro para un proyecto como el que describes (“Clase Producto con menú en Java”):
-
----
+--
 
 # 🧩 Proyecto: Gestión de Productos (POO en Java)
 
@@ -141,5 +139,3 @@ Para la entrega se deben incluir:
 * Reporte final en PDF
 
 ---
-
-¿Quieres que te genere también un archivo `.md` descargable con este contenido (listo para subir al repositorio de GitHub)?
