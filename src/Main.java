@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        PRODUCTO producto1 = new PRODUCTO();
-        PRODUCTO producto2 = new PRODUCTO();
+        Producto producto1 = new Producto();
+        Producto producto2 = new Producto();
         int opcion;
 
         do {
@@ -54,7 +54,7 @@ public class Main {
         scanner.close();
     }
 
-    private static void capturarProducto(Scanner scanner, PRODUCTO producto, String nombreProducto) {
+    private static void capturarProducto(Scanner scanner, Producto producto, String nombreProducto) {
         System.out.println("\n=== Capturar " + nombreProducto + " ===");
         System.out.print("Ingrese el nombre del producto: ");
         String nombre = scanner.nextLine();
@@ -72,7 +72,7 @@ public class Main {
         System.out.println("¡Producto capturado exitosamente!");
     }
 
-    private static void mostrarInventario(PRODUCTO producto1, PRODUCTO producto2) {
+    private static void mostrarInventario(Producto producto1, Producto producto2) {
         System.out.println("\n=== Inventario Actual ===");
         System.out.println("\nProducto 1:");
         System.out.println(producto1.toString());
@@ -80,7 +80,7 @@ public class Main {
         System.out.println(producto2.toString());
     }
 
-    private static void aplicarDescuento(Scanner scanner, PRODUCTO producto1, PRODUCTO producto2) {
+    private static void aplicarDescuento(Scanner scanner, Producto producto1, Producto producto2) {
         System.out.println("\n=== Aplicar Descuento ===");
         System.out.println("1. Producto 1");
         System.out.println("2. Producto 2");
@@ -90,7 +90,7 @@ public class Main {
         System.out.print("Ingrese el porcentaje de descuento (0-100): ");
         double descuento = scanner.nextDouble();
         
-        PRODUCTO productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
+        Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
         double precioOriginal = productoSeleccionado.getPrecio();
         double precioConDescuento = precioOriginal - (precioOriginal * (descuento / 100));
         productoSeleccionado.setPrecio(precioConDescuento);
@@ -98,7 +98,7 @@ public class Main {
         System.out.println("¡Descuento aplicado exitosamente!");
     }
 
-    private static void venderUnidades(Scanner scanner, PRODUCTO producto1, PRODUCTO producto2) {
+    private static void venderUnidades(Scanner scanner, Producto producto1, Producto producto2) {
         System.out.println("\n=== Vender Unidades ===");
         System.out.println("1. Producto 1");
         System.out.println("2. Producto 2");
@@ -108,7 +108,7 @@ public class Main {
         System.out.print("Ingrese la cantidad a vender: ");
         int cantidadVender = scanner.nextInt();
         
-        PRODUCTO productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
+        Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
         if (cantidadVender <= productoSeleccionado.getCantidad()) {
             productoSeleccionado.setCantidad(productoSeleccionado.getCantidad() - cantidadVender);
             System.out.println("¡Venta realizada exitosamente!");
@@ -117,7 +117,7 @@ public class Main {
         }
     }
 
-    private static void reponerUnidades(Scanner scanner, PRODUCTO producto1, PRODUCTO producto2) {
+    private static void reponerUnidades(Scanner scanner, Producto producto1, Producto producto2) {
         System.out.println("\n=== Reponer Unidades ===");
         System.out.println("1. Producto 1");
         System.out.println("2. Producto 2");
@@ -127,12 +127,12 @@ public class Main {
         System.out.print("Ingrese la cantidad a reponer: ");
         int cantidadReponer = scanner.nextInt();
         
-        PRODUCTO productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
+        Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
         productoSeleccionado.setCantidad(productoSeleccionado.getCantidad() + cantidadReponer);
         System.out.println("¡Unidades repuestas exitosamente!");
     }
 
-    private static void mostrarMenuProductos(Scanner scanner, PRODUCTO producto) {
+    private static void mostrarMenuProductos(Scanner scanner, Producto producto) {
         int opcionProducto;
         do {
             System.out.println("\n=== MENÚ DE PRODUCTOS ===");

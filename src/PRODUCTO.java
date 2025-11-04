@@ -9,7 +9,7 @@ DESCRIPCION:
 
 ***************************************************************************/
 
-public class Producto {
+public class  {
 	
 	//Atributos 
 	
@@ -31,34 +31,34 @@ public class Producto {
 	
 	//Metodos get y set
 
-	public String getnombre() {
+	public String getNombre() {
 		return Nombre;
 	}
-	public void setnombre(String Nombre) {
+	public void setNombre(String Nombre) {
 		this.Nombre=Nombre;
 	}
-	public double getprecio() {
+	public double getPrecio() {
 		return Precio;
 	}
-	public void setprecio(double Precio) {
+	public void setPrecio(double Precio) {
 		this.Precio=Precio;
 	}
-	public int getcantidad() {
+	public int getCantidad() {
 		return Cantidad;
 	}
-	public void setcantidad(int Cantidad) {
+	public void setCantidad(int Cantidad) {
 		this.Cantidad=Cantidad;
 	}
-	public String getcategoria() {
+	public String getCategoria() {
 		return Categoria;
 	}
-	public void setcategoria(String Categoria) {
+	public void setCategoria(String Categoria) {
 		this.Categoria=Categoria;
 	}
-	public boolean getdisponible() {
+	public boolean getDisponible() {
 		return Disponible;
 	}
-	public void setdisponible(boolean Disponible) {
+	public void setDisponible(boolean Disponible) {
 		this.Disponible=Disponible;
 	}
 	
@@ -88,7 +88,7 @@ public class Producto {
 			System.out.println("Se vendieron: "+unidades+" unidades");
 			System.out.println("Quedan: "+Cantidad+" unidades en el inventario");
 		} else if (unidades > Cantidad){
-			System.out.println("No podemos realizar la venta. Faltan unidades en nuestro inventario);
+			System.out.println("No podemos realizar la venta. Faltan unidades en nuestro inventario");
 		} else {
 			System.out.println("Ingresa otro valor");
 		}
