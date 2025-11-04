@@ -159,9 +159,10 @@ public class Main {
     private static void mostrarIntegrantes() {
         System.out.println("\n=== Integrantes del Equipo ===");
         System.out.println("1. Manuel Enquique Garcia Neve ");
-        System.out.println("2. [Nombre del integrante 2]");
-        System.out.println("2. [Matricula del integrante 2]");
-        System.out.println("3. [Nombre del integrante 3]");
-        System.out.println("2. [matricula del integrante 3]");
+        System.out.println("   2193077979");
+        System.out.println("2. Ian");
+        System.out.println("   ");
+        System.out.println("3. Luis ");
+        System.out.println("");
     }
 }
