@@ -9,7 +9,7 @@ DESCRIPCION:
 
 ***************************************************************************/
 
-public class  {
+public class Producto {
 	
 	//Atributos 
 	
