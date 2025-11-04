@@ -1,10 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Producto producto1 = new Producto();
-        Producto producto2 = new Producto();
+        List<Producto> productos = new ArrayList<>();
         int opcion;
 
         do {
@@ -29,19 +30,19 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    mostrarMenuProductos(scanner, producto1);
+                    mostrarMenuProductos(scanner, productos);
                     break;
                 case 2:
-                    mostrarInventario(producto1, producto2);
+                    mostrarInventario(productos);
                     break;
                 case 3:
-                    aplicarDescuento(scanner, producto1, producto2);
+                    aplicarDescuento(scanner, productos);
                     break;
                 case 4:
-                    venderUnidades(scanner, producto1, producto2);
+                    venderUnidades(scanner, productos);
                     break;
                 case 5:
-                    reponerUnidades(scanner, producto1, producto2);
+                    reponerUnidades(scanner, productos);
                     break;
                 case 6:
                     mostrarIntegrantes();
@@ -57,8 +58,8 @@ public class Main {
         scanner.close();
     }
 
-    private static void capturarProducto(Scanner scanner, Producto producto, String nombreProducto) {
-        System.out.println("\n=== Capturar " + nombreProducto + " ===");
+    private static Producto capturarProducto(Scanner scanner) {
+        System.out.println("\n=== Capturar Producto ===");
         System.out.print("Ingrese el nombre del producto: ");
         String nombre = scanner.nextLine();
 
@@ -77,32 +78,38 @@ public class Main {
         int cantidad = scanner.nextInt();
         scanner.nextLine(); // Limpiar buffer
 
+        Producto producto = new Producto();
         producto.setNombre(nombre);
         producto.setPrecio(precio);
         producto.setCantidad(cantidad);
 
         System.out.println("¡Producto capturado exitosamente!");
+        return producto;
     }
 
-    private static void mostrarInventario(Producto producto1, Producto producto2) {
+    private static void mostrarInventario(List<Producto> productos) {
         System.out.println("\n=== Inventario Actual ===");
-        System.out.println("\nProducto 1:");
-        System.out.println(producto1.toString());
-        System.out.println("\nProducto 2:");
-        System.out.println(producto2.toString());
+        if (productos.isEmpty()) {
+            System.out.println("No hay productos en el inventario.");
+            return;
+        }
+        for (int i = 0; i < productos.size(); i++) {
+            System.out.println("\nProducto " + (i + 1) + ":");
+            System.out.println(productos.get(i).toString());
+        }
     }
 
-    private static void aplicarDescuento(Scanner scanner, Producto producto1, Producto producto2) {
+    private static void aplicarDescuento(Scanner scanner, List<Producto> productos) {
+        if (productos.isEmpty()) {
+            System.out.println("No hay productos para aplicar descuento.");
+            return;
+        }
         System.out.println("\n=== Aplicar Descuento ===");
-        System.out.println("1. Producto 1");
-        System.out.println("2. Producto 2");
-        System.out.print("Seleccione el producto: ");
-        int seleccion = obtenerEntero(scanner, 1, 2);
-
+        int idx = seleccionarProducto(scanner, productos);
         System.out.print("Ingrese el porcentaje de descuento (0-100): ");
         double descuento = obtenerDoubleEnRango(scanner, 0, 100);
 
-        Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
+        Producto productoSeleccionado = productos.get(idx);
         double precioOriginal = productoSeleccionado.getPrecio();
         double precioConDescuento = precioOriginal - (precioOriginal * (descuento / 100));
         productoSeleccionado.setPrecio(precioConDescuento);
@@ -110,17 +117,17 @@ public class Main {
         System.out.println("¡Descuento aplicado exitosamente!");
     }
 
-    private static void venderUnidades(Scanner scanner, Producto producto1, Producto producto2) {
+    private static void venderUnidades(Scanner scanner, List<Producto> productos) {
+        if (productos.isEmpty()) {
+            System.out.println("No hay productos para vender.");
+            return;
+        }
         System.out.println("\n=== Vender Unidades ===");
-        System.out.println("1. Producto 1");
-        System.out.println("2. Producto 2");
-        System.out.print("Seleccione el producto: ");
-        int seleccion = obtenerEntero(scanner, 1, 2);
-
+        int idx = seleccionarProducto(scanner, productos);
         System.out.print("Ingrese la cantidad a vender: ");
         int cantidadVender = obtenerEntero(scanner, 0, Integer.MAX_VALUE);
 
-        Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
+        Producto productoSeleccionado = productos.get(idx);
         if (cantidadVender <= productoSeleccionado.getCantidad()) {
             productoSeleccionado.setCantidad(productoSeleccionado.getCantidad() - cantidadVender);
             System.out.println("¡Venta realizada exitosamente!");
@@ -129,42 +136,57 @@ public class Main {
         }
     }
 
-    private static void reponerUnidades(Scanner scanner, Producto producto1, Producto producto2) {
+    private static void reponerUnidades(Scanner scanner, List<Producto> productos) {
+        if (productos.isEmpty()) {
+            System.out.println("No hay productos para reponer.");
+            return;
+        }
         System.out.println("\n=== Reponer Unidades ===");
-        System.out.println("1. Producto 1");
-        System.out.println("2. Producto 2");
-        System.out.print("Seleccione el producto: ");
-        int seleccion = obtenerEntero(scanner, 1, 2);
-
+        int idx = seleccionarProducto(scanner, productos);
         System.out.print("Ingrese la cantidad a reponer: ");
         int cantidadReponer = obtenerEntero(scanner, 0, Integer.MAX_VALUE);
 
-        Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
+        Producto productoSeleccionado = productos.get(idx);
         productoSeleccionado.setCantidad(productoSeleccionado.getCantidad() + cantidadReponer);
         System.out.println("¡Unidades repuestas exitosamente!");
     }
 
-    private static void mostrarMenuProductos(Scanner scanner, Producto producto) {
+    private static void mostrarMenuProductos(Scanner scanner, List<Producto> productos) {
         int opcionProducto;
         do {
             System.out.println("\n=== MENÚ DE PRODUCTOS ===");
             System.out.println("1. Crear nuevo producto");
-            System.out.println("2. Regresar al menú principal");
+            System.out.println("2. Listar productos");
+            System.out.println("3. Regresar al menú principal");
             System.out.print("Seleccione una opción: ");
 
-            opcionProducto = obtenerEntero(scanner, 1, 2);
+            opcionProducto = obtenerEntero(scanner, 1, 3);
 
             switch (opcionProducto) {
                 case 1:
-                    capturarProducto(scanner, producto, "Producto 1");
+                    Producto nuevo = capturarProducto(scanner);
+                    productos.add(nuevo);
                     break;
                 case 2:
+                    mostrarInventario(productos);
+                    break;
+                case 3:
                     System.out.println("Regresando al menú principal...");
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, intente de nuevo.");
             }
-        } while (opcionProducto != 2);
+        } while (opcionProducto != 3);
+    }
+
+    private static int seleccionarProducto(Scanner scanner, List<Producto> productos) {
+        System.out.println("Seleccione el producto:");
+        for (int i = 0; i < productos.size(); i++) {
+            System.out.println((i + 1) + ". " + productos.get(i).getNombre());
+        }
+        System.out.print("Ingrese el número del producto: ");
+        int seleccion = obtenerEntero(scanner, 1, productos.size());
+        return seleccion - 1; // devolver índice 0-based
     }
 
     private static void mostrarIntegrantes() {
@@ -199,7 +221,22 @@ public class Main {
     private static double obtenerDoubleEnRango(Scanner scanner, double min, double max) {
         double val;
         while (true) {
-            if (!scanner.hasNextDouble()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}    }        }            return val;            }                continue;                System.out.println("Valor fuera de rango. Intente de nuevo:");            if (val < min || val > max) {            scanner.nextLine();            val = scanner.nextDouble();            }                continue;                scanner.nextLine();                System.out.println("Entrada no válida. Intente de nuevo:");            if (!scanner.hasNextDouble()) {            if (!scanner.hasNextDouble()) {
                 System.out.println("Entrada no válida. Intente de nuevo:");
                 scanner.nextLine();
                 continue;
