@@ -17,40 +17,43 @@ public class Main {
             System.out.println("6. Mostrar integrantes del equipo");
             System.out.println("7. Salir");
             System.out.print("Seleccione una opción: ");
-            
-            opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
+
+            if (!scanner.hasNextInt()) {
+                System.out.println("Entrada no válida.");
+                scanner.nextLine();
+                opcion = -1;
+            } else {
+                opcion = scanner.nextInt();
+                scanner.nextLine(); // Limpiar el buffer
+            }
 
             switch (opcion) {
                 case 1:
                     mostrarMenuProductos(scanner, producto1);
                     break;
                 case 2:
-                    capturarProducto(scanner, producto2, "Producto 2");
-                    break;
-                case 3:
                     mostrarInventario(producto1, producto2);
                     break;
-                case 4:
+                case 3:
                     aplicarDescuento(scanner, producto1, producto2);
                     break;
-                case 5:
+                case 4:
                     venderUnidades(scanner, producto1, producto2);
                     break;
-                case 6:
+                case 5:
                     reponerUnidades(scanner, producto1, producto2);
                     break;
-                case 7:
+                case 6:
                     mostrarIntegrantes();
                     break;
-                case 8:
+                case 7:
                     System.out.println("¡Gracias por usar el programa!");
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, intente de nuevo.");
             }
-        } while (opcion != 8);
-        
+        } while (opcion != 7);
+
         scanner.close();
     }
 
@@ -58,17 +61,26 @@ public class Main {
         System.out.println("\n=== Capturar " + nombreProducto + " ===");
         System.out.print("Ingrese el nombre del producto: ");
         String nombre = scanner.nextLine();
-        
+
         System.out.print("Ingrese el precio del producto: ");
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Precio no válido. Intente de nuevo:");
+            scanner.nextLine();
+        }
         double precio = scanner.nextDouble();
-        
+
         System.out.print("Ingrese la cantidad en inventario: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Cantidad no válida. Intente de nuevo:");
+            scanner.nextLine();
+        }
         int cantidad = scanner.nextInt();
-        
+        scanner.nextLine(); // Limpiar buffer
+
         producto.setNombre(nombre);
         producto.setPrecio(precio);
         producto.setCantidad(cantidad);
-        
+
         System.out.println("¡Producto capturado exitosamente!");
     }
 
@@ -85,16 +97,16 @@ public class Main {
         System.out.println("1. Producto 1");
         System.out.println("2. Producto 2");
         System.out.print("Seleccione el producto: ");
-        int seleccion = scanner.nextInt();
-        
+        int seleccion = obtenerEntero(scanner, 1, 2);
+
         System.out.print("Ingrese el porcentaje de descuento (0-100): ");
-        double descuento = scanner.nextDouble();
-        
+        double descuento = obtenerDoubleEnRango(scanner, 0, 100);
+
         Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
         double precioOriginal = productoSeleccionado.getPrecio();
         double precioConDescuento = precioOriginal - (precioOriginal * (descuento / 100));
         productoSeleccionado.setPrecio(precioConDescuento);
-        
+
         System.out.println("¡Descuento aplicado exitosamente!");
     }
 
@@ -103,11 +115,11 @@ public class Main {
         System.out.println("1. Producto 1");
         System.out.println("2. Producto 2");
         System.out.print("Seleccione el producto: ");
-        int seleccion = scanner.nextInt();
-        
+        int seleccion = obtenerEntero(scanner, 1, 2);
+
         System.out.print("Ingrese la cantidad a vender: ");
-        int cantidadVender = scanner.nextInt();
-        
+        int cantidadVender = obtenerEntero(scanner, 0, Integer.MAX_VALUE);
+
         Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
         if (cantidadVender <= productoSeleccionado.getCantidad()) {
             productoSeleccionado.setCantidad(productoSeleccionado.getCantidad() - cantidadVender);
@@ -122,11 +134,11 @@ public class Main {
         System.out.println("1. Producto 1");
         System.out.println("2. Producto 2");
         System.out.print("Seleccione el producto: ");
-        int seleccion = scanner.nextInt();
-        
+        int seleccion = obtenerEntero(scanner, 1, 2);
+
         System.out.print("Ingrese la cantidad a reponer: ");
-        int cantidadReponer = scanner.nextInt();
-        
+        int cantidadReponer = obtenerEntero(scanner, 0, Integer.MAX_VALUE);
+
         Producto productoSeleccionado = (seleccion == 1) ? producto1 : producto2;
         productoSeleccionado.setCantidad(productoSeleccionado.getCantidad() + cantidadReponer);
         System.out.println("¡Unidades repuestas exitosamente!");
@@ -139,10 +151,9 @@ public class Main {
             System.out.println("1. Crear nuevo producto");
             System.out.println("2. Regresar al menú principal");
             System.out.print("Seleccione una opción: ");
-            
-            opcionProducto = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
-            
+
+            opcionProducto = obtenerEntero(scanner, 1, 2);
+
             switch (opcionProducto) {
                 case 1:
                     capturarProducto(scanner, producto, "Producto 1");
@@ -158,28 +169,48 @@ public class Main {
 
     private static void mostrarIntegrantes() {
         System.out.println("\n=== Integrantes del Equipo ===");
-        System.out.println("1. Manuel Enquique Garcia Neve ");
+        System.out.println("1. Manuel Enquique Garcia Neve");
         System.out.println("   2193077979");
         System.out.println("2. Ian");
-        System.out.println("   ");
-        System.out.println("3. Luis ");
-        System.out.println("");
+        System.out.println("   (info faltante)");
+        System.out.println("3. Luis");
+        System.out.println("   (info faltante)");
     }
 
-    // Ejemplo: main con función producto
-    #include <stdio.h>
-
-    int producto(int a, int b) {
-        return a * b;
-    }
-
-    int main(void) {
-        int x, y;
-        if (scanf("%d %d", &x, &y) != 2) {
-            fprintf(stderr, "Entrada inválida\n");
-            return 1;
+    // Helpers para validación de entrada
+    private static int obtenerEntero(Scanner scanner, int min, int max) {
+        int val;
+        while (true) {
+            if (!scanner.hasNextInt()) {
+                System.out.println("Entrada no válida. Intente de nuevo:");
+                scanner.nextLine();
+                continue;
+            }
+            val = scanner.nextInt();
+            scanner.nextLine();
+            if (val < min || val > max) {
+                System.out.println("Debe ingresar un número entre " + min + " y " + max + ". Intente de nuevo:");
+                continue;
+            }
+            return val;
         }
-        printf("%d\n", producto(x, y));
-        return 0;
+    }
+
+    private static double obtenerDoubleEnRango(Scanner scanner, double min, double max) {
+        double val;
+        while (true) {
+            if (!scanner.hasNextDouble()) {
+                System.out.println("Entrada no válida. Intente de nuevo:");
+                scanner.nextLine();
+                continue;
+            }
+            val = scanner.nextDouble();
+            scanner.nextLine();
+            if (val < min || val > max) {
+                System.out.println("Valor fuera de rango. Intente de nuevo:");
+                continue;
+            }
+            return val;
+        }
     }
 }
