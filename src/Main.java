@@ -11,11 +11,11 @@ public class Main {
             System.out.println("\n=== MENÚ PRINCIPAL ===");
             System.out.println("1. Menú de Productos");
             System.out.println("2. Mostrar inventario");
-            System.out.println("2. Aplicar descuento");
-            System.out.println("3. Vender unidades");
-            System.out.println("4. Reponer unidades");
-            System.out.println("5. Mostrar integrantes del equipo");
-            System.out.println("6. Salir");
+            System.out.println("3. Aplicar descuento");
+            System.out.println("4. Vender unidades");
+            System.out.println("5. Reponer unidades");
+            System.out.println("6. Mostrar integrantes del equipo");
+            System.out.println("7. Salir");
             System.out.print("Seleccione una opción: ");
             
             opcion = scanner.nextInt();
@@ -164,5 +164,22 @@ public class Main {
         System.out.println("   ");
         System.out.println("3. Luis ");
         System.out.println("");
+    }
+
+    // Ejemplo: main con función producto
+    #include <stdio.h>
+
+    int producto(int a, int b) {
+        return a * b;
+    }
+
+    int main(void) {
+        int x, y;
+        if (scanf("%d %d", &x, &y) != 2) {
+            fprintf(stderr, "Entrada inválida\n");
+            return 1;
+        }
+        printf("%d\n", producto(x, y));
+        return 0;
     }
 }
